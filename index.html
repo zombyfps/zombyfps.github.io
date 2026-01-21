@@ -1,136 +1,70 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ZombyFPS Link Hub</title>
-  <!-- Font Awesome CDN -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    body {
-      font-family: 'Inter', Arial, sans-serif;
-      background: #0d0d0d;
-      color: #fff;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 500px;
-      margin: auto;
-      padding: 20px;
-      text-align: center;
-    }
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      margin: 20px auto;
-      overflow: hidden;
-      border: 3px solid #fff;
-    }
-    .avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    h1 {
-      margin: 10px 0;
-      font-size: 26px;
-      font-weight: 700;
-    }
-    p {
-      font-size: 14px;
-      color: #bbb;
-    }
-    h2 {
-      margin-top: 30px;
-      font-size: 18px;
-      font-weight: 600;
-      border-bottom: 1px solid #333;
-      padding-bottom: 5px;
-      text-align: left;
-    }
-    .links {
-      margin-top: 15px;
-    }
-    .link {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 10px;
-      margin: 10px 0;
-      padding: 12px;
-      background: #1a1a1a;
-      border-radius: 8px;
-      text-decoration: none;
-      color: #fff;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
-    .link:hover {
-      background: #333;
-      transform: scale(1.02);
-    }
-    .link i, .link img {
-      font-size: 22px;
-      height: 22px;
-    }
-    /* Renkli ikonlar */
-    .youtube i { color: #FF0000; }
-    .tiktok i { color: #000000; }
-    .instagram i { 
-      background: linear-gradient(45deg, #feda75, #d62976, #962fbf, #4f5bd5);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .donate i { color: #00c853; }
-    footer {
-      margin-top: 40px;
-      font-size: 12px;
-      color: #888;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <div class="avatar">
-      <img src="https://i.hizliresim.com/a712nbf.jpg" alt="zombyfps">
+    <!-- Avatar ve Başlık -->
+    <div class="avatar" onclick="toggleAbout()">
+      <img src="images/profile_photo.jpg" alt="zombyfps">
     </div>
-    <h1>ZOMBY Link Hub</h1>
-    <p>zombyfps@gmail.com</p>
+    <h1 onclick="toggleAbout()">Halit "Zomby" Bozkurt</h1>
+    <a class="mail" href="mailto:zombyfps@gmail.com">zombyfps@gmail.com</a>
+
+    <!-- Dil seçimi -->
+    <div style="margin-top:10px;">
+      <label for="langSelect" style="font-size:14px;">🌐 Dil Seçimi:</label>
+      <select id="langSelect" onchange="changeLang(this.value)">
+        <option value="tr">Türkçe</option>
+        <option value="en">English</option>
+        <option value="ru">Русский</option>
+        <option value="ar">العربية</option>
+      </select>
+    </div>
+
+    <!-- Linkler -->
+    <div class="links">
+      <!-- Hakkımda linki -->
+      <a class="link" href="javascript:void(0)" onclick="toggleAbout()">
+        <i class="fas fa-user"></i> <span id="aboutLinkText">Hakkımda</span>
+      </a>
+
+      <!-- Tek Hakkımda kutusu (linkin hemen altında, başlıksız) -->
+      <div id="aboutBox" class="card" style="display:none; text-align:left;">
+        <p id="aboutText"></p>
+        <div class="close" onclick="toggleAbout()">⬆️</div>
+      </div>
+
+      <a class="link" href="https://kick.com/zombyfps" target="_blank">
+        <img class="kick-logo" src="github.com/zombyfps/zombyfps.github.io/blob/main/images/kick_logo.jpg?raw=true" alt="Kick"> Kick
+      </a>
+      <a class="link youtube" href="https://youtube.com/@zombyfps" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+      <a class="link instagram" href="https://instagram.com/zombyfps" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      <a class="link tiktok" href="https://tiktok.com/@zombyfps" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+      <a class="link donate" href="https://donate.bynogame.com/zomby" target="_blank"><i class="fas fa-donate"></i> <span id="donateText">Bağış (ByNoGame)</span></a>
+    </div>
+
+    <!-- Sponsor Alanı -->
+    <div class="section-title" id="sponsorTitle">🤝 Sponsor</div>
+    <div class="card">
+      <p id="contactText"><a class="mail" href="mailto:zombyfps@gmail.com">İletişim için: zombyfps@gmail.com</a></p>
+    </div>
 
     <!-- Canlı Yayın -->
-    <h2>📺 Canlı Yayın</h2>
-    <div class="links">
-      <a class="link" href="https://kick.com/zombyfps" target="_blank">
-        <img src="https://static.vecteezy.com/system/resources/previews/043/362/263/non_2x/kick-logo-icon-streaming-service-free-vector.jpg" alt="Kick" width="22"> Kick
-      </a>
-      <a class="link youtube" href="https://youtube.com/@zombyfps" target="_blank">
-        <i class="fab fa-youtube"></i> YouTube
-      </a>
+    <div class="section-title" id="liveTitle">📺 Canlı Yayın</div>
+    <div class="card">
+      <iframe src="https://player.kick.com/zombyfps" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
     </div>
 
-    <!-- Sosyal Medya -->
-    <h2>🌐 Sosyal Medya</h2>
-    <div class="links">
-      <a class="link tiktok" href="https://tiktok.com/@zombyfps" target="_blank">
-        <i class="fab fa-tiktok"></i> TikTok
-      </a>
-      <a class="link instagram" href="https://instagram.com/zombyfps" target="_blank">
-        <i class="fab fa-instagram"></i> Instagram
-      </a>
-    </div>
-
-    <!-- Destek & Bağış -->
-    <h2>💖 Destek & Bağış</h2>
-    <div class="links">
-      <a class="link donate" href="https://donate.bynogame.com/zomby" target="_blank">
-        <i class="fas fa-donate"></i> ByNoGame
-      </a>
-    </div>
-
-    <footer>© 2026 ZombyFPS</footer>
+    <footer>© <span id="year"></span> ZombyFPS</footer>
   </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
